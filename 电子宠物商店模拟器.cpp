@@ -34,6 +34,7 @@ void Sold(cat[], dog[], rabbit[], fish[]);//出售
 void Showinfo(cat[], dog[], rabbit[], fish[]);//展示信息
 
 
+
 //主程序
 int main()
 {
@@ -71,11 +72,25 @@ void Instruction()
     cout << "       您可以通过键盘来和萌宠进行交互        " << endl;
     cout << "   它们的生理状况将完全取决于您的认真呵护" << endl;
     cout << "   您需要帮助它们吃饭，喝水，玩耍，睡觉……" << endl;
-    cout << "  希望您能享受养育萌宠带来的快乐！祝您体验愉快！  ”" << endl;
+    cout << "  希望您能享受养育萌宠带来的快乐！祝您体验愉快！  " << endl;
     cout << endl;
     cout << "---------------------------------------------------------------------" << endl;
-    cout << "备注：所有宠物总数不能超过10只 ，每种宠物最多能拥有3只" << endl;
-    cout << "获得宠物需要花费金钱，出售则获得金钱。 请使用分您的资金 " << endl;
+    cout << "规则："<<endl;
+    cout << "一、宠物的属性值" << endl;
+    cout << "不同宠物处于良好/不良状态的属性值不相同，例如猫猫和鱼儿的健康下限并不相同，作为店主的您需要自己摸索如何照顾它们。" << endl;
+    cout << "您可以选择查询状态，通过宠物们的反应和对话来判断需要进行的操作。" << endl;
+    cout << endl;
+    cout << "二、操作带来的影响" << endl;
+    cout << "喂食：     饱腹感增加，体力增加，健康值/心情可能增加或降低"<<endl;
+    cout << "喂水：     饱腹感增加，健康值/心情可能增加或降低" << endl;
+    cout << "玩耍：     健康增加，心情增加，体力降低，饱腹感降低" << endl;
+    cout << "哄睡：     体力增加，健康增加，饱腹感降低" << endl;
+    cout << "看医生：   属性值恢复到初始状态" << endl;
+    cout << "帮助如厕： 饱腹感降低，健康值增加" << endl;
+    cout << endl;
+    cout << "三、购买/出售宠物" << endl;
+    cout << "目前店内所能容纳宠物总数不能超过10只 ，且每种宠物最多能拥有3只" << endl;
+    cout << "获得宠物需要花费金钱，出售则获得金钱。 请合理分配您的资金 " << endl;
     cout << "---------------------------------------------------------------------" << endl;
     cout << endl;
 }
@@ -135,7 +150,7 @@ void Buy(cat& c1, dog& d1, rabbit& r1, fish& f1)
         c1.status = 1;
         system("cls");
         cout << "==============================================================" << endl;
-        cout << "      "<<c1.name<<" 喜欢这个名字，并挠了挠你的衣角！" << endl;
+        cout << "      "<<c1.name<<"喜欢这个名字，并挠了挠你的衣角！" << endl;
         cout << "==============================================================" << endl;
         sum += 1;
         money -= c1.price;
@@ -161,7 +176,7 @@ void Buy(cat& c1, dog& d1, rabbit& r1, fish& f1)
         d1.status = 1;
         system("cls");
         cout << "==============================================================" << endl;
-        cout << "      " << d1.name << " 喜欢这个名字，并挠了挠你的衣角！" << endl;
+        cout << "      " << d1.name << "喜欢这个名字，并挠了挠你的衣角！" << endl;
         cout << "==============================================================" << endl;
         sum += 1;
         money -= d1.price;
@@ -240,7 +255,7 @@ void Action(cat c2[], dog d2[], rabbit r2[], fish f2[])
         cout << " 3--------------- 兔兔           " << endl;
         cout << " 4--------------- 鱼儿           " << endl;
         cout << " 0--------------- 退出" << endl;
-        cin >> C;
+        cin >> C;        
         switch (C)
         {
         case 1:
@@ -248,6 +263,7 @@ void Action(cat c2[], dog d2[], rabbit r2[], fish f2[])
             if (cn == 0)
             {
                 cout << "你还没有猫咪呢" << endl;
+                system("pause");
                 break;
             }
             for (int i = 0; i < cn; i++)
@@ -265,19 +281,22 @@ void Action(cat c2[], dog d2[], rabbit r2[], fish f2[])
                 {
                     system("cls");
                     c2[i].Action();
+                    if (c2[i].status == 0)
+                    {
+                        cn -= 1;
+                        sum -= 1;
+                    }
                 }
-                if (c2[i].check() == 1)
-                {
-                    cn -= 1;
-                    sum -= 1;
-                }
+                
             }
+            break;
         }
         case 2:
         {
             if (dn == 0)
             {
                 cout << "你还没有狗狗呢" << endl;
+                system("pause");
                 break;
             }
             for (int i = 0; i < dn; i++)
@@ -296,6 +315,11 @@ void Action(cat c2[], dog d2[], rabbit r2[], fish f2[])
                     system("cls");
                     d2[i].Action();
                 }
+                if (d2[i].status == 0)
+                {
+                    dn -= 1;
+                    sum -= 1;
+                }
             }
             break;
         }
@@ -304,6 +328,7 @@ void Action(cat c2[], dog d2[], rabbit r2[], fish f2[])
             if (rn == 0)
             {
                 cout << "你还没有兔兔呢" << endl;
+                system("pause");
                 break;
             }
             for (int i = 0; i < rn; i++)
@@ -322,6 +347,11 @@ void Action(cat c2[], dog d2[], rabbit r2[], fish f2[])
                     system("cls");
                     r2[i].Action();
                 }
+                if (r2[i].status == 0)
+                {
+                    rn -= 1;
+                    sum -= 1;
+                }
             }
             break;
         }
@@ -330,6 +360,7 @@ void Action(cat c2[], dog d2[], rabbit r2[], fish f2[])
             if (fn == 0)
             {
                 cout << "你还没有鱼儿呢" << endl;
+                system("pause");
                 break;
             }
             for (int i = 0; i < fn; i++)
@@ -347,6 +378,11 @@ void Action(cat c2[], dog d2[], rabbit r2[], fish f2[])
                 {
                     system("cls");
                     f2[i].Action();
+                }
+                if (f2[i].status == 0)
+                {
+                    fn -= 1;
+                    sum -= 1;
                 }
             }
             break;

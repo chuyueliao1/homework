@@ -5,14 +5,14 @@ using namespace std;
 class Pet
 {
 public:
-	virtual void Feed() = 0;//喂食
-	virtual void Drink() = 0;//喂水
-	virtual void Play() = 0;//玩耍
-	virtual void Action() = 0;//行动操作
-	virtual void showPet() = 0;//展示信息
-	virtual void Sleep() = 0;//哄睡
-	virtual void Doctor() = 0;//看医生
-	virtual void Toilet() = 0;//如厕
+	virtual int Feed() = 0;//喂食
+	virtual int Drink() = 0;//喂水
+	virtual int Play() = 0;//玩耍
+	virtual int Action() = 0;//行动操作
+	virtual int showPet() = 0;//展示信息
+	virtual int Sleep() = 0;//哄睡
+	virtual int Doctor() = 0;//看医生
+	virtual int Toilet() = 0;//如厕
 	virtual int Sold() = 0;//出售
 	virtual int check() = 0;//判断是否存活
 

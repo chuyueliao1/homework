@@ -17,19 +17,19 @@ public:
     ~fish()
     {
     }
-    void Feed();
-    void Drink();
-    void Play();
-    void Action();
-    void showPet();
+    int Feed();
+    int Drink();
+    int Play();
+    int Action();
+    int showPet();
     int Sold();
-    void Sleep();
-    void Doctor();
-    void Toilet();
+    int Sleep();
+    int Doctor();
+    int Toilet();
     int check();
 };
 
-void fish::showPet()
+int fish::showPet()
 {
     cout << "       姓    名 ：" << this->name << endl;
     cout << "       健 康 值 ：" << this->HP << endl;
@@ -57,10 +57,12 @@ void fish::showPet()
         cout << "恭喜！！        " << this->name << "心情愉快，继续它的水中华尔兹~" << endl;
     if (this->fullness > 2 && this->fullness < 7)
         cout << "恭喜！！        " << this->name << "吃得饱饱的~" << endl;
+    return 0;
 }
 
-void fish::Action()
+int fish::Action()
 {
+    int cost = 0;//互动产生的花销
     int c = 1;
     while (c != 0)
     {
@@ -81,61 +83,108 @@ void fish::Action()
         cin >> c;
         switch (c)
         {
-        case 1:this->Feed();   break;
-        case 2:this->Drink();  break;
-        case 3:this->Play();   break;
-        case 4:this->Doctor(); break;
-        case 5:this->Sleep();  break;
-        case 6:this->Toilet(); break;
+        case 1:cost += this->Feed();   break;
+        case 2:cost += this->Drink();  break;
+        case 3:cost += this->Play();   break;
+        case 4:cost += this->Doctor(); break;
+        case 5:cost += this->Sleep();  break;
+        case 6:cost += this->Toilet(); break;
         case 0:break;
         }
         system("cls");
         if (this->check() == 1)
         {
             system("pause");
-            return;
+            return cost;
         }
     }
+    return cost;
 }
-void fish::Feed()
+int fish::Feed()
 {
-    if (this->fullness > 6)
-    {
-        this->fullness += 1;
-        this->eng += 1;
-        this->HP -= 1;
-        this->mood -= 1;
-        this->span -= 1;
-        cout << "     “咯~~~”，您的鱼儿已经很撑了，肚子也变得圆鼓鼓的" << endl;
-        cout << "-----------------------------------------------------" << endl;
-        system("pause");
-        return;
-    }
-    cout << "   您给鱼儿投喂了一些它最爱的水草~" << endl;
-    cout << "-----------------------------------------------------" << endl;
-    this->eng += 2;
-    this->fullness += 1;
-    this->mood += 2;
-    this->span -= 1;
+    system("cls");
+    cout << "       请问你想投喂哪种食物？" << endl;
+    cout << "       1、 -------------- 小虫子  (3r)" << endl;
+    cout << "       2、 -------------- 小水草  (1r)" << endl;
+    cout << "       3、 -------------- 黑暗料理(0r)" << endl;
+    cout << "       0、 -------------- 退出" << endl;
     system("pause");
+    int x;
+    cin >> x;
+    switch (x)
+    {
+    case 1:
+    {
+        if (this->fullness > 6)
+        {
+            this->fullness += 1;
+            this->eng += 1;
+            this->HP -= 1;
+            this->mood -= 1;
+            this->span -= 1;
+            cout << "     “咯~~~”，您的鱼儿已经很撑了，肚子也变得圆鼓鼓的" << endl;
+            cout << "-----------------------------------------------------" << endl;
+            system("pause");
+            return 3;
+        }
+        cout << "   您给鱼儿投喂了一些它最爱的小虫子~" << endl;
+        cout << "-----------------------------------------------------" << endl;
+        this->eng += 2;
+        this->fullness += 1;
+        this->mood += 2;
+        this->span -= 1;
+        system("pause");
+        return 3;
+    }
+    case 2:
+    {
+        if (this->fullness > 6)
+        {
+            this->fullness += 1;
+            this->eng += 1;
+            this->HP -= 1;
+            this->mood -= 1;
+            this->span -= 1;
+            cout << "     “咯~~~”，您的鱼儿已经很撑了，肚子也变得圆鼓鼓的" << endl;
+            cout << "-----------------------------------------------------" << endl;
+            system("pause");
+            return 1;
+        }
+        cout << "   多吃蔬菜有好处~" << endl;
+        cout << "-----------------------------------------------------" << endl;
+        this->eng += 2;
+        this->fullness += 1;
+        this->mood += 1;
+        this->span -= 1;
+        system("pause");
+        return 1;
+    }
+    case 3:
+    {
+        cout << "    您的鱼直接掉头就游走了……" << endl;
+        system("pause");
+        return 0;
+    }
+    } 
 }
 
-void fish::Drink()
+int fish::Drink()
 {
     cout << this->name << "虽然在水中，但还是忍不住给你翻了个大白眼。内心： 小爷我天天住在水里需要你喂水吗？" << endl;
     cout << "-----------------------------------------------------" << endl;
     system("pause");
+    return 0;
 }
 
 
-void fish::Play()
+int fish::Play()
 {
     if (this->eng < 2)
     {
         cout << "     您的鱼儿已经很累了，请不要与它玩耍了，让它休息一会儿，暂停营业吧！";
         cout << "-----------------------------------------------------" << endl;
         system("pause");
-        return;
+        return 0;
     }
     cout << "   和鱼儿玩耍，鱼儿亲昵地亲了亲你的手" << endl;
     cout << "-----------------------------------------------------" << endl;
@@ -147,28 +196,29 @@ void fish::Play()
     system("pause");
 }
 
-void fish::Sleep()
+int fish::Sleep()
 {
     this->HP += 2;
     this->eng += 4;
     this->fullness -= 2;
     this->span -= 1;
     system("pause");
+    return 0;
 }
 //看医生函数
-void fish::Doctor()
+int fish::Doctor()
 {
     this->HP = 6;
     this->mood = 10;
     this->fullness = 6;
     this->eng = 6;
     this->span -= 1;
-    cout << "在兽医小姐姐的全面治疗下，您的鱼儿已经满血复活！以后要好好照顾它哦！" << endl;
+    cout << "在兽医小姐姐的全面治疗下，您的鱼儿已经满血复活！以后要好好照顾它哦！(耗费5r)" << endl;
     system("pause");
-    return;
+    return 5;
 }
 //如厕函数
-void fish::Toilet()
+int fish::Toilet()
 {
     if (this->fullness > 6)
     {
@@ -191,7 +241,7 @@ void fish::Toilet()
     {
         cout << this->name << "完全不鸟你……" << endl;
         system("pause");
-        return;
+        return 0;
     }
 }
 
@@ -212,7 +262,13 @@ int fish::check()
         cout << "          这天，它的鳃终于不再继续张合……" << endl;
         cout << endl;
         cout << "         【达成结局】： 寿终正寝" << endl;
-
+        cout << "              # " << endl;
+        cout << "           #  #   #" << endl;
+        cout << "        #     # # #" << endl;
+        cout << "      #   **  ##  #" << endl;
+        cout << "        #     # # #" << endl;
+        cout << "           #  #   #" << endl;
+        cout << "              #" << endl;
         this->HP = 6;
         this->mood = 10;
         this->fullness = 6;

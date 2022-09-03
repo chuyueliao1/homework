@@ -11,6 +11,7 @@
 */
 
 #include <iostream>
+#include <fstream>
 #include <string>
 #include "Cat.h"
 #include "Dog.h"
@@ -32,7 +33,8 @@ void Buy(cat&, dog&, rabbit&, fish&);//购买
 void Action(cat[], dog[], rabbit[], fish[]);//互动
 void Sold(cat[], dog[], rabbit[], fish[]);//出售
 void Showinfo(cat[], dog[], rabbit[], fish[]);//展示信息
-
+void SaveData(cat[], dog[], rabbit[], fish[]);//存档
+void ReadData(cat[], dog[], rabbit[], fish[]);//读档
 
 
 //主程序
@@ -52,10 +54,12 @@ int main()
         switch (C)
         {
         case 1: Buy(c[cn], d[dn], r[rn], f[fn]);      break;
-        case 2: Action(c, d, r, f);                   break;
-        case 3: Showinfo(c, d, r, f);                    break;
-        case 4: Sold(c, d, r, f);                     break;
-        case 0: system("CLS");                        break;
+        case 2: Action(c, d, r, f);                         break;
+        case 3: Showinfo(c, d, r, f);                                   break;
+        case 4: Sold(c, d, r, f);                           break;
+        case 5: SaveData(c, d, r, f);                       break;
+        case 6: ReadData(c, d, r, f);                       break;
+        case 0: system("CLS");                                  break;
         }
         system("pause");
         cout << endl;
@@ -105,6 +109,8 @@ int Menu()
     cout << "       2、 -------------- 照顾萌宠" << endl;
     cout << "       3、 -------------- 查询状态" << endl;
     cout << "       4、 -------------- 出售萌宠" << endl;
+    cout << "       5、 -------------- 储存档案" << endl;
+    cout << "       6、 -------------- 读取档案" << endl;
     cout << "       0、 -------------- 退出菜单" << endl;
     cout << endl;
     cout << "===========================================" << endl;    //清屏函数  ------  system("CLS ")
@@ -280,7 +286,7 @@ void Action(cat c2[], dog d2[], rabbit r2[], fish f2[])
                 if (cc == 1)
                 {
                     system("cls");
-                    c2[i].Action();
+                    money-=c2[i].Action();
                     if (c2[i].status == 0)
                     {
                         cn -= 1;
@@ -313,7 +319,7 @@ void Action(cat c2[], dog d2[], rabbit r2[], fish f2[])
                 if (cc == 1)
                 {
                     system("cls");
-                    d2[i].Action();
+                    money-=d2[i].Action();
                 }
                 if (d2[i].status == 0)
                 {
@@ -345,7 +351,7 @@ void Action(cat c2[], dog d2[], rabbit r2[], fish f2[])
                 if (cc == 1)
                 {
                     system("cls");
-                    r2[i].Action();
+                    money-=r2[i].Action();
                 }
                 if (r2[i].status == 0)
                 {
@@ -377,7 +383,7 @@ void Action(cat c2[], dog d2[], rabbit r2[], fish f2[])
                 if (cc == 1)
                 {
                     system("cls");
-                    f2[i].Action();
+                    money-=f2[i].Action();
                 }
                 if (f2[i].status == 0)
                 {
@@ -596,3 +602,39 @@ void Showinfo(cat c[], dog d[], rabbit r[], fish f[])
     }
     cout << endl;
 }
+
+//存档
+void SaveData(cat c4[], dog d4[], rabbit r4[], fish f4[])
+{
+    ofstream Data("Database.txt");
+    fstream file("Database.txt", ios::out);
+    Data << sum <<" "<< money <<" "<< cn <<" "<< dn <<" "<< rn <<" "<< fn << endl;
+    int n;
+    for (n = 0;n < cn; n++)
+        Data << c4[n].HP << " " << c4[n].eng << " " << c4[n].fullness << " " << c4[n].mood << " " << c4[n].name << " " << c4[n].price << " " << c4[n].span << " " << c4[n].status << " " << endl;
+    for (n = 0; n < dn; n++)
+        Data << d4[n].HP << " " << d4[n].eng << " " << d4[n].fullness << " " << d4[n].mood << " " << d4[n].name << " " << d4[n].price << " " << d4[n].span << " " << d4[n].status << " " << endl;
+    for (n = 0; n < rn; n++)
+        Data << r4[n].HP << " " << r4[n].eng << " " << r4[n].fullness << " " << r4[n].mood << " " << r4[n].name << " " << r4[n].price << " " << r4[n].span << " " << r4[n].status << " " << endl;
+    for (n = 0; n < fn; n++)
+        Data << f4[n].HP << " " << f4[n].eng << " " << f4[n].fullness << " " << f4[n].mood << " " << f4[n].name << " " << f4[n].price << " " << f4[n].span << " " << f4[n].status << " " << endl;
+    Data.close();
+ }
+
+//读档
+void ReadData(cat c5[], dog d5[], rabbit r5[], fish f5[])
+{
+    ifstream ReadData("Database.txt");
+    ReadData >> sum >> money >> cn >> dn >> rn >> fn;
+    int n;
+    for (n = 0; n < cn; n++)
+        ReadData >> c5[n].HP >> c5[n].eng >> c5[n].fullness >> c5[n].mood >> c5[n].name >> c5[n].price >> c5[n].span >> c5[n].status ;
+    for (n = 0; n < dn; n++)
+        ReadData >> d5[n].HP >> d5[n].eng >> d5[n].fullness >> d5[n].mood >> d5[n].name >> d5[n].price >> d5[n].span >> d5[n].status ;
+    for (n = 0; n < rn; n++)
+        ReadData >> r5[n].HP >> r5[n].eng >> r5[n].fullness >> r5[n].mood >> r5[n].name >> r5[n].price >> r5[n].span >> r5[n].status;
+    for (n = 0; n < fn; n++)
+        ReadData >> f5[n].HP >> f5[n].eng >> f5[n].fullness >> f5[n].mood >> f5[n].name >> f5[n].price >> f5[n].span >> f5[n].status ;
+    ReadData.close();
+}
+

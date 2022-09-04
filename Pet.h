@@ -15,8 +15,21 @@ public:
 	virtual int Toilet() = 0;//如厕
 	virtual int Sold() = 0;//出售
 	virtual int check() = 0;//判断是否存活
+	virtual void Name(string) = 0;//取名
+	virtual void Status(int) = 0;
+	
+	virtual string ShowName() = 0;
+	virtual int ShowStatus() = 0;
+	virtual int ShowKind() = 0;
+	virtual int ShowPrice() = 0;
+	virtual int ShowHP() = 0;
+	virtual int ShowSpan() = 0;
+	virtual int ShowMood() = 0;
+	virtual int ShowFullness() = 0;
+	virtual int ShowEng() = 0;
 
 	string name;//姓名
+	int kind;//种类
 	int HP = 8;//健康值
 	int span = 10;//寿命
 	int mood = 10;//心情
